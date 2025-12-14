@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>透射电子显微镜 (TEM) 完整教材大纲</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --bg-color: #f4f7f6;
+            --text-color: #2c3e50;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh; /* 固定高度以便内部滚动 */
+        }
+        
+        .header {
+            background: var(--primary-gradient);
+            color: var(--white);
+            padding: 30px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            overflow-x: auto;
+            flex-shrink: 0;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .nav-tabs::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        
+        .nav-tab {
+            flex: 1;
+            min-width: 120px;
+            padding: 18px 20px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 1em;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s;
+            white-space: nowrap;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            line-height: 1.2;
+        }
+        
+        .nav-tab span.en-tab {
+            font-size: 0.8em;
+            font-weight: normal;
+            margin-top: 4px;
+            opacity: 0.8;
+        }
+
+        .nav-tab:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+        
+        .nav-tab.active {
+            background: var(--white);
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .content-wrapper {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-area {
+            padding: 20px 40px 10px 40px;
+            background: var(--white);
+            flex-shrink: 0;
+        }
+
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            padding-left: 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            font-size: 1em;
+            transition: all 0.3s;
+            background-color: #f8f9fa;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+        }
+        
+        .scrollable-content {
+            padding: 20px 40px 40px 40px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        .part-section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        
+        .part-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .chapter {
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s, transform 0.2s;
+            background: var(--white);
+        }
+        
+        .chapter:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+            border-color: #dee2e6;
+        }
+        
+        .chapter-title {
+            padding: 20px;
+            font-size: 1.1em;
+            color: var(--text-color);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* 改为center以保持整洁 */
+            gap: 15px;
+            background: var(--white);
+            user-select: none;
+        }
+        
+        .chapter-title:hover {
+            background: #f8f9fa;
+        }
+
+        .chapter-title-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .en-title {
+            font-size: 0.85em;
+            color: #8898aa;
+            font-weight: normal;
+            margin-top: 2px;
+        }
+
+        .chapter-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--primary-gradient);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 0.9em;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+        
+        .subsections {
+            display: none;
+            background: #fbfbfb;
+            border-top: 1px solid #e9ecef;
+            padding: 15px 20px;
+        }
+        
+        .subsections.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 1000px; }
+        }
+        
+        .subsection {
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 6px;
+            color: #555;
+            font-size: 0.95em;
+            transition: all 0.2s;
+            display: flex;
+            align-items: baseline; /* 保持文字基线对齐 */
+            flex-wrap: wrap; /* 允许长英文换行 */
+        }
+        
+        .subsection:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+            padding-left: 18px;
+        }
+        
+        .subsection::before {
+            content: "•";
+            margin-right: 10px;
+            color: #adb5bd;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        .subsection:hover::before {
+            color: var(--primary-color);
+        }
+
+        .en {
+            margin-left: 8px;
+            color: #99a;
+            font-size: 0.9em;
+        }
+
+        /* 滚动条美化 */
+        .scrollable-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scrollable-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        .scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 0; }
+            .container { height: 100vh; border-radius: 0; }
+            .nav-tab { padding: 15px 10px; font-size: 0.9em; }
+            .scrollable-content { padding: 20px; }
+            .search-area { padding: 20px 20px 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 透射电子显微镜</h1>
+            <p>Transmission Electron Microscopy - Complete Course Outline</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showPart(1)">
+                第一部分：基础
+                <span class="en-tab">Part 1: Basics</span>
+            </button>
+            <button class="nav-tab" onclick="showPart(2)">
+                第二部分：衍射
+                <span class="en-tab">Part 2: Diffraction</span>
+            </button>
+            <button class="nav-tab" onclick="showPart(3)">
+                第三部分：成像
+                <span class="en-tab">Part 3: Imaging</span>
+            </button>
+            <button class="nav-tab" onclick="showPart(4)">
+                第四部分：波谱
+                <span class="en-tab">Part 4: Spectrometry</span>
+            </button>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="search-area">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="搜索章节、关键词 (中文或英文)..." onkeyup="searchContent()">
+                </div>
+            </div>
+
+            <div class="scrollable-content">
+                <!-- Part 1: Basics -->
+                <div id="part1" class="part-section active">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">章节 / Chapters</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">60+</div>
+                            <div class="stat-label">概念 / Concepts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">仪器</div>
+                            <div class="stat-label">Instrumentation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chapter" data-keywords="TEM 材料 电子 分辨率 衍射 样品制备 materials electron resolution diffraction specimen preparation">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">01</span>
+                            <div class="chapter-title-text">
+                                <span>透射电子显微镜</span>
+                                <span class="en-title">The Transmission Electron Microscope</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">应该在TEM中研究什么材料？<span class="en">What materials should we study in TEM?</span></div>
+                            <div class="subsection">为什么使用电子？历史回顾<span class="en">Why use electrons? A history lesson</span></div>
+                            <div class="subsection">显微术与分辨率概念<span class="en">Microscopy and the concept of resolution</span></div>
+                            <div class="subsection">电子与物质的相互作用<span class="en">Interaction of electrons with matter</span></div>
+                            <div class="subsection">景深与焦深<span class="en">Depth of field and depth of focus</span></div>
+                            <div class="subsection">衍射原理<span class="en">The rationale for diffraction</span></div>
+                            <div class="subsection">TEM的局限性：取样、图像解释、束流损伤<span class="en">Limitations of TEM: Sampling, interpretation, damage</span></div>
+                            <div class="subsection">不同类型的TEM<span class="en">Different kinds of TEMs</span></div>
+                            <div class="subsection">电子的基本性质<span class="en">Some fundamental properties of electrons</span></div>
+                            <div class="subsection">互联网/万维网上的显微术<span class="en">Microscopy on the Internet/World Wide Web</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="chapter" data-keywords="散射 衍射 角度 截面 自由程 scattering diffraction angles cross sections mean free path">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">02</span>
+                            <div class="chapter-title-text">
+                                <span>散射与衍射</span>
+                                <span class="en-title">Scattering and Diffraction</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么对电子散射感兴趣？<span class="en">Why are we interested in electron scattering?</span></div>
+                            <div class="subsection">散射和衍射的术语<span class="en">Terminology of scattering and diffraction</span></div>
+                            <div class="subsection">散射角<span class="en">The scattering angle</span></div>
+                            <div class="subsection">相互作用截面及其微分<span class="en">Interaction cross sections and differential cross sections</span></div>
+                            <div class="subsection">平均自由程<span class="en">Mean free path</span></div>
+                            <div class="subsection">如何在TEM中使用散射<span class="en">How we use scattering in the TEM</span></div>
+                            <div class="subsection">与X射线衍射的比较<span class="en">Comparison with X-ray diffraction</span></div>
+                            <div class="subsection">夫琅禾费和菲涅耳衍射<span class="en">Fraunhofer and Fresnel diffraction</span></div>
+                            <div class="subsection">光从狭缝和孔的衍射<span class="en">Diffraction of light from slits and holes</span></div>
+                            <div class="subsection">相长干涉<span class="en">Constructive interference</span></div>
+                            <div class="subsection">电子衍射图样<span class="en">Electron diffraction patterns</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="弹性散射 粒子 波 卢瑟福 原子散射因子 结构因子 elastic scattering particle wave rutherford atomic scattering factor structure factor">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">03</span>
+                            <div class="chapter-title-text">
+                                <span>弹性散射</span>
+                                <span class="en-title">Elastic Scattering</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">粒子和波<span class="en">Particles and waves</span></div>
+                            <div class="subsection">弹性散射机制<span class="en">Mechanisms of elastic scattering</span></div>
+                            <div class="subsection">孤立原子的弹性散射<span class="en">Elastic scattering from isolated atoms</span></div>
+                            <div class="subsection">卢瑟福截面<span class="en">The Rutherford cross section</span></div>
+                            <div class="subsection">卢瑟福截面的修正<span class="en">Modifications to the Rutherford cross section</span></div>
+                            <div class="subsection">卢瑟福散射电子的相干性<span class="en">Coherency of the Rutherford scattered electrons</span></div>
+                            <div class="subsection">原子散射因子 f(y)<span class="en">The atomic scattering factor f(y)</span></div>
+                            <div class="subsection">结构因子 F(y)<span class="en">The structure factor F(y)</span></div>
+                            <div class="subsection">简单衍射概念<span class="en">Simple diffraction concepts</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="非弹性散射 X射线 二次电子 束流损伤 inelastic scattering x-rays secondary electrons beam damage">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">04</span>
+                            <div class="chapter-title-text">
+                                <span>非弹性散射与束流损伤</span>
+                                <span class="en-title">Inelastic Scattering and Beam Damage</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">TEM中发生哪些非弹性过程？<span class="en">Which inelastic processes occur in the TEM?</span></div>
+                            <div class="subsection">X射线发射：特征X射线和韧致辐射<span class="en">X-ray emission: Characteristic and Bremsstrahlung</span></div>
+                            <div class="subsection">二次电子发射：二次电子和俄歇电子<span class="en">Secondary electron emission: SE and Auger</span></div>
+                            <div class="subsection">电子-空穴对和阴极荧光(CL)<span class="en">Electron-hole pairs and cathodoluminescence (CL)</span></div>
+                            <div class="subsection">等离激元和声子<span class="en">Plasmons and phonons</span></div>
+                            <div class="subsection">束流损伤：电子剂量、样品加热、不同材料的损伤<span class="en">Beam damage: Dose, heating, sputtering</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="电子源 热发射 场发射 亮度 相干性 electron sources thermionic emission field emission brightness coherence">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">05</span>
+                            <div class="chapter-title-text">
+                                <span>电子源</span>
+                                <span class="en-title">Electron Sources</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">不同电子源的物理原理<span class="en">Physics of different electron sources</span></div>
+                            <div class="subsection">热发射和场发射<span class="en">Thermionic emission and field emission</span></div>
+                            <div class="subsection">电子束特性：亮度、相干性、能量扩散、稳定性<span class="en">Beam properties: Brightness, coherence, spread, stability</span></div>
+                            <div class="subsection">电子枪：热发射枪和场发射枪(FEG)<span class="en">Electron guns: Thermionic and FEG</span></div>
+                            <div class="subsection">枪的比较<span class="en">Comparison of guns</span></div>
+                            <div class="subsection">测量枪特性：束流、会聚角、束斑直径<span class="en">Measuring gun characteristics</span></div>
+                            <div class="subsection">应该使用什么加速电压？<span class="en">What kV should you use?</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="透镜 光阑 分辨率 像差 lenses apertures resolution aberrations">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">06</span>
+                            <div class="chapter-title-text">
+                                <span>透镜、光阑和分辨率</span>
+                                <span class="en-title">Lenses, Apertures, and Resolution</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么要学习透镜？<span class="en">Why learn about lenses?</span></div>
+                            <div class="subsection">光学与电子光学<span class="en">Light optics and electron optics</span></div>
+                            <div class="subsection">射线图的绘制<span class="en">Ray diagrams</span></div>
+                            <div class="subsection">透镜方程<span class="en">The lens equation</span></div>
+                            <div class="subsection">放大、缩小和聚焦<span class="en">Magnification, demagnification, and focus</span></div>
+                            <div class="subsection">电子透镜：极靴和线圈、不同种类的透镜<span class="en">Electron lenses: Polepieces and coils</span></div>
+                            <div class="subsection">光阑和光栏<span class="en">Apertures and diaphragms</span></div>
+                            <div class="subsection">真实透镜及其问题：球差、色差、像散<span class="en">Real lenses: Spherical, chromatic, astigmatism</span></div>
+                            <div class="subsection">电子透镜的分辨率：理论分辨率、实际分辨率<span class="en">Resolution of electron lenses</span></div>
+                            <div class="subsection">焦深和景深<span class="en">Depth of focus and depth of field</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="探测 荧光屏 CCD 探测器 detection screens ccd detectors">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">07</span>
+                            <div class="chapter-title-text">
+                                <span>如何"看到"电子</span>
+                                <span class="en-title">Detectors and Seeing Electrons</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">电子探测和显示<span class="en">Electron detection and display</span></div>
+                            <div class="subsection">观察屏<span class="en">Viewing screens</span></div>
+                            <div class="subsection">电子探测器：半导体、闪烁体-光电倍增管<span class="en">Detectors: Semiconductor, scintillator-PMT</span></div>
+                            <div class="subsection">电荷耦合器件(CCD)探测器<span class="en">Charge-coupled device (CCD) detectors</span></div>
+                            <div class="subsection">法拉第杯<span class="en">Faraday cups</span></div>
+                            <div class="subsection">图像记录：照相乳剂、其他记录方法<span class="en">Image recording</span></div>
+                            <div class="subsection">扫描图像与静态图像的比较<span class="en">Comparison of scanning and static images</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="真空 泵 样品台 污染 vacuum pumps holders contamination">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">08</span>
+                            <div class="chapter-title-text">
+                                <span>泵和样品台</span>
+                                <span class="en-title">Pumps and Holders</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">真空系统<span class="en">The vacuum system</span></div>
+                            <div class="subsection">粗抽泵<span class="en">Roughing pumps</span></div>
+                            <div class="subsection">高/超高真空泵：扩散、涡轮分子、离子、低温<span class="en">High/Ultra-high vacuum pumps</span></div>
+                            <div class="subsection">整个系统<span class="en">The whole system</span></div>
+                            <div class="subsection">泄漏检测<span class="en">Leak detection</span></div>
+                            <div class="subsection">污染：烃和水蒸气<span class="en">Contamination: Hydrocarbons and water</span></div>
+                            <div class="subsection">样品台和台架<span class="en">Specimen holders and stages</span></div>
+                            <div class="subsection">侧插式样品台和顶插式样品台<span class="en">Side-entry and top-entry holders</span></div>
+                            <div class="subsection">倾转和旋转样品台<span class="en">Tilt and rotate holders</span></div>
+                            <div class="subsection">原位样品台<span class="en">In-situ holders</span></div>
+                            <div class="subsection">等离子清洁器<span class="en">Plasma cleaners</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="照明系统 物镜 成像系统 校准 illumination system objective lens imaging system calibration">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">09</span>
+                            <div class="chapter-title-text">
+                                <span>仪器</span>
+                                <span class="en-title">The Instrument</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">照明系统：平行束TEM、会聚束(S)TEM<span class="en">The illumination system</span></div>
+                            <div class="subsection">聚光-物镜透镜<span class="en">The condenser-objective lens</span></div>
+                            <div class="subsection">平移和倾斜束流<span class="en">Translating and tilting the beam</span></div>
+                            <div class="subsection">物镜和台架<span class="en">The objective lens and stage</span></div>
+                            <div class="subsection">形成衍射图和图像：TEM成像系统<span class="en">The TEM imaging system</span></div>
+                            <div class="subsection">选区衍射、明场和暗场成像<span class="en">SAD, Bright-field and Dark-field</span></div>
+                            <div class="subsection">STEM成像系统：明场、暗场和环形暗场<span class="en">The STEM imaging system: BF, DF, HAADF</span></div>
+                            <div class="subsection">对准和消像散<span class="en">Alignment and astigmatism correction</span></div>
+                            <div class="subsection">成像系统的校准<span class="en">Calibration of the imaging system</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="样品制备 安全 减薄 FIB specimen preparation safety thinning fib">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">10</span>
+                            <div class="chapter-title-text">
+                                <span>样品制备</span>
+                                <span class="en-title">Specimen Preparation</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">安全<span class="en">Safety</span></div>
+                            <div class="subsection">自支撑盘还是使用栅网？<span class="en">Self-supporting disk or grid?</span></div>
+                            <div class="subsection">准备自支撑盘进行最终减薄<span class="en">Preparing self-supporting disks</span></div>
+                            <div class="subsection">盘的最终减薄：电解抛光、离子减薄<span class="en">Final thinning: Electropolishing, Ion milling</span></div>
+                            <div class="subsection">横截面样品<span class="en">Cross-section specimens</span></div>
+                            <div class="subsection">栅网/垫圈上的样品：超薄切片、研磨<span class="en">Specimens on grids/washers</span></div>
+                            <div class="subsection">复型和萃取<span class="en">Replicas and extraction</span></div>
+                            <div class="subsection">解理和SACT<span class="en">Cleaving and SACT</span></div>
+                            <div class="subsection">光刻技术<span class="en">Lithography</span></div>
+                            <div class="subsection">聚焦离子束(FIB)<span class="en">Focused Ion Beam (FIB)</span></div>
+                            <div class="subsection">样品储存<span class="en">Specimen storage</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 2: Diffraction -->
+                <div id="part2" class="part-section">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">11</div>
+                            <div class="stat-label">章节 / Chapters</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">55+</div>
+                            <div class="stat-label">概念 / Concepts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">结构</div>
+                            <div class="stat-label">Structure</div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="衍射 晶体 布拉格定律 SAD diffraction crystals bragg law sad">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">11</span>
+                            <div class="chapter-title-text">
+                                <span>TEM中的衍射</span>
+                                <span class="en-title">Diffraction in TEM</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么在TEM中使用衍射？<span class="en">Why use diffraction in TEM?</span></div>
+                            <div class="subsection">TEM、衍射相机和电视<span class="en">The TEM, diffraction cameras and TV</span></div>
+                            <div class="subsection">从原子平面的散射<span class="en">Scattering from atomic planes</span></div>
+                            <div class="subsection">从晶体的散射<span class="en">Scattering from crystals</span></div>
+                            <div class="subsection">布拉格定律中n的意义<span class="en">The significance of n in Bragg's law</span></div>
+                            <div class="subsection">动力学效应的图解介绍<span class="en">Pictorial introduction to dynamical effects</span></div>
+                            <div class="subsection">衍射图中指数的使用<span class="en">Using indices in diffraction patterns</span></div>
+                            <div class="subsection">衍射图形成的实际方面<span class="en">Practical aspects of diffraction pattern formation</span></div>
+                            <div class="subsection">更多关于选区衍射图的内容<span class="en">More about SAD patterns</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="倒易空间 倒易点阵 埃瓦尔德球 激发误差 reciprocal space reciprocal lattice ewald sphere excitation error">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">12</span>
+                            <div class="chapter-title-text">
+                                <span>倒易空间思维</span>
+                                <span class="en-title">Thinking in Reciprocal Space</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么引入另一个点阵？<span class="en">Why introduce another lattice?</span></div>
+                            <div class="subsection">倒易点阵的数学定义<span class="en">Mathematical definition of reciprocal lattice</span></div>
+                            <div class="subsection">矢量g<span class="en">The vector g</span></div>
+                            <div class="subsection">劳厄方程及其与布拉格定律的关系<span class="en">The Laue equations and Bragg's Law</span></div>
+                            <div class="subsection">埃瓦尔德反射球<span class="en">The Ewald sphere of reflection</span></div>
+                            <div class="subsection">激发误差<span class="en">The excitation error</span></div>
+                            <div class="subsection">薄膜效应和加速电压的影响<span class="en">Effect of thin foils and accelerating voltage</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="衍射束 强度 Howie-Whelan方程 diffracted beams intensity howie-whelan equations">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">13</span>
+                            <div class="chapter-title-text">
+                                <span>衍射束</span>
+                                <span class="en-title">Diffracted Beams</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么计算强度？<span class="en">Why calculate intensities?</span></div>
+                            <div class="subsection">方法<span class="en">The approach</span></div>
+                            <div class="subsection">衍射束的振幅<span class="en">Amplitude of a diffracted beam</span></div>
+                            <div class="subsection">特征长度xg<span class="en">The characteristic length xg</span></div>
+                            <div class="subsection">Howie-Whelan方程<span class="en">The Howie-Whelan equations</span></div>
+                            <div class="subsection">重新表述Howie-Whelan方程<span class="en">Rewriting the Howie-Whelan equations</span></div>
+                            <div class="subsection">求解Howie-Whelan方程<span class="en">Solving the Howie-Whelan equations</span></div>
+                            <div class="subsection">总波振幅<span class="en">Total wave amplitude</span></div>
+                            <div class="subsection">有效激发误差<span class="en">Effective excitation error</span></div>
+                            <div class="subsection">柱近似<span class="en">Column approximation</span></div>
+                            <div class="subsection">耦合谐振子类比<span class="en">Coupled harmonic oscillator analogy</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="布洛赫波 波动方程 薛定谔方程 bloch waves wave equation schrodinger equation">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">14</span>
+                            <div class="chapter-title-text">
+                                <span>布洛赫波</span>
+                                <span class="en-title">Bloch Waves</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">TEM中的波动方程<span class="en">The wave equation in the TEM</span></div>
+                            <div class="subsection">晶体<span class="en">The crystal</span></div>
+                            <div class="subsection">布洛赫函数<span class="en">The Bloch functions</span></div>
+                            <div class="subsection">布洛赫波的薛定谔方程<span class="en">The Schrodinger equation for Bloch waves</span></div>
+                            <div class="subsection">平面波振幅<span class="en">Plane wave amplitudes</span></div>
+                            <div class="subsection">布洛赫波的吸收<span class="en">Absorption of Bloch waves</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="色散面 色散图 dispersion surfaces dispersion diagrams">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">15</span>
+                            <div class="chapter-title-text">
+                                <span>色散面</span>
+                                <span class="en-title">Dispersion Surfaces</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">介绍<span class="en">Introduction</span></div>
+                            <div class="subsection">Ug=0时的色散图<span class="en">Dispersion diagrams when Ug=0</span></div>
+                            <div class="subsection">Ug≠0时的色散图<span class="en">Dispersion diagrams when Ug≠0</span></div>
+                            <div class="subsection">色散面与衍射图的关系<span class="en">Dispersion surfaces and diffraction patterns</span></div>
+                            <div class="subsection">Ug、xg和Sg之间的关系<span class="en">Relationship between Ug, xg, and Sg</span></div>
+                            <div class="subsection">布洛赫波的振幅<span class="en">Amplitudes of Bloch waves</span></div>
+                            <div class="subsection">扩展到更多束<span class="en">Extending to more beams</span></div>
+                            <div class="subsection">色散面和缺陷<span class="en">Dispersion surfaces and defects</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="晶体衍射 结构因子 BCC FCC HCP 超晶格 diffraction from crystals structure factor bcc fcc hcp superlattice">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">16</span>
+                            <div class="chapter-title-text">
+                                <span>晶体衍射</span>
+                                <span class="en-title">Diffraction from Crystals</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">原始点阵衍射回顾<span class="en">Review of diffraction from primitive lattices</span></div>
+                            <div class="subsection">结构因子：理念<span class="en">Structure Factors: The idea</span></div>
+                            <div class="subsection">重要结构：BCC、FCC和HCP<span class="en">Important structures: BCC, FCC, HCP</span></div>
+                            <div class="subsection">将fcc和hcp扩展到包括基<span class="en">Extending fcc and hcp to include a basis</span></div>
+                            <div class="subsection">将bcc和fcc分析应用于简单立方<span class="en">Applying bcc and fcc analysis to simple cubic</span></div>
+                            <div class="subsection">将hcp扩展到TiAl<span class="en">Extending hcp to TiAl</span></div>
+                            <div class="subsection">超晶格反射和成像<span class="en">Superlattice reflections and imaging</span></div>
+                            <div class="subsection">长周期超晶格的衍射<span class="en">Diffraction from long-period superlattices</span></div>
+                            <div class="subsection">禁戒反射<span class="en">Forbidden reflections</span></div>
+                            <div class="subsection">使用国际表<span class="en">Using the International Tables</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="小体积衍射 薄膜 缺陷 位错 diffraction from small volumes thin foils defects dislocations">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">17</span>
+                            <div class="chapter-title-text">
+                                <span>小体积衍射</span>
+                                <span class="en-title">Diffraction from Small Volumes</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">求和方法<span class="en">The summation method</span></div>
+                            <div class="subsection">积分方法<span class="en">The integration method</span></div>
+                            <div class="subsection">薄膜效应<span class="en">Thin-foil effects</span></div>
+                            <div class="subsection">楔形样品的衍射<span class="en">Diffraction from wedges</span></div>
+                            <div class="subsection">平面缺陷的衍射<span class="en">Diffraction from planar defects</span></div>
+                            <div class="subsection">颗粒的衍射<span class="en">Diffraction from particles</span></div>
+                            <div class="subsection">位错的衍射，单独和集体<span class="en">Diffraction from dislocations</span></div>
+                            <div class="subsection">衍射和色散面<span class="en">Diffraction and dispersion surfaces</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="平行束衍射 标定 立体投影 取向 parallel-beam diffraction indexing stereographic projection orientation">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">18</span>
+                            <div class="chapter-title-text">
+                                <span>获取和标定平行束衍射图</span>
+                                <span class="en-title">Obtaining and Indexing Parallel-Beam DP</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">选择你的技术<span class="en">Choosing your technique</span></div>
+                            <div class="subsection">实验SAD技术<span class="en">Experimental SAD techniques</span></div>
+                            <div class="subsection">立体投影<span class="en">Stereographic projections</span></div>
+                            <div class="subsection">标定单晶衍射图<span class="en">Indexing single-crystal DPs</span></div>
+                            <div class="subsection">多晶材料的环形图<span class="en">Ring patterns from polycrystalline materials</span></div>
+                            <div class="subsection">空心锥衍射的环形图<span class="en">Ring patterns from hollow-cone diffraction</span></div>
+                            <div class="subsection">非晶材料的环形图<span class="en">Ring patterns from amorphous materials</span></div>
+                            <div class="subsection">进动衍射<span class="en">Precession diffraction</span></div>
+                            <div class="subsection">双重衍射<span class="en">Double diffraction</span></div>
+                            <div class="subsection">样品取向<span class="en">Orientation of the specimen</span></div>
+                            <div class="subsection">取向关系<span class="en">Orientation relationships</span></div>
+                            <div class="subsection">计算机分析和自动取向测定<span class="en">Computer analysis and automated orientation</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="菊池衍射 菊池线 菊池图 kikuchi diffraction kikuchi lines kikuchi maps">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">19</span>
+                            <div class="chapter-title-text">
+                                <span>菊池衍射</span>
+                                <span class="en-title">Kikuchi Diffraction</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">菊池线的起源<span class="en">Origin of Kikuchi lines</span></div>
+                            <div class="subsection">菊池线和布拉格散射<span class="en">Kikuchi lines and Bragg scattering</span></div>
+                            <div class="subsection">构建菊池图<span class="en">Constructing Kikuchi maps</span></div>
+                            <div class="subsection">晶体取向和菊池图<span class="en">Crystal orientation and Kikuchi maps</span></div>
+                            <div class="subsection">设置Sg的值<span class="en">Setting the value of Sg</span></div>
+                            <div class="subsection">强度<span class="en">Intensities</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="CBED 会聚束 HOLZ ZOLZ cbed convergent beam holz zolz">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">20</span>
+                            <div class="chapter-title-text">
+                                <span>获取CBED图</span>
+                                <span class="en-title">Obtaining CBED Patterns</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么使用会聚束？<span class="en">Why use a convergent beam?</span></div>
+                            <div class="subsection">获取CBED图：TEM模式和STEM模式<span class="en">Obtaining CBED patterns</span></div>
+                            <div class="subsection">实验变量：C2光阑、相机长度、束斑大小<span class="en">Experimental variables</span></div>
+                            <div class="subsection">样品厚度的影响<span class="en">Effect of specimen thickness</span></div>
+                            <div class="subsection">聚焦和散焦CBED图<span class="en">Focused and defocused CBED patterns</span></div>
+                            <div class="subsection">大角度(散焦)CBED图<span class="en">Large-angle (defocused) CBED patterns</span></div>
+                            <div class="subsection">能量过滤<span class="en">Energy filtering</span></div>
+                            <div class="subsection">零阶和高阶劳厄区衍射(ZOLZ和HOLZ)<span class="en">ZOLZ and HOLZ diffraction</span></div>
+                            <div class="subsection">CBED图中的菊池线和布拉格线<span class="en">Kikuchi lines and Bragg lines in CBED</span></div>
+                            <div class="subsection">HOLZ线<span class="en">HOLZ lines</span></div>
+                            <div class="subsection">空心锥/进动CBED<span class="en">Hollow-cone / Precession CBED</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="CBED应用 厚度 对称性 晶格应变 thickness symmetry lattice strain">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">21</span>
+                            <div class="chapter-title-text">
+                                <span>使用会聚束技术</span>
+                                <span class="en-title">Using Convergent-Beam Techniques</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">标定CBED图<span class="en">Indexing CBED patterns</span></div>
+                            <div class="subsection">厚度测定<span class="en">Thickness determination</span></div>
+                            <div class="subsection">晶胞测定<span class="en">Unit-cell determination</span></div>
+                            <div class="subsection">对称性确定的基础<span class="en">Symmetry determination: Basics</span></div>
+                            <div class="subsection">晶格应变测量<span class="en">Lattice strain measurement</span></div>
+                            <div class="subsection">对映异构体的确定<span class="en">Enantiomorph determination</span></div>
+                            <div class="subsection">结构因子和电荷密度确定<span class="en">Structure factor and charge density</span></div>
+                            <div class="subsection">其他方法：扫描方法和纳米衍射<span class="en">Scanning methods and nanodiffraction</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 3: Imaging -->
+                <div id="part3" class="part-section">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">章节 / Chapters</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">70+</div>
+                            <div class="stat-label">概念 / Concepts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">衬度</div>
+                            <div class="stat-label">Contrast</div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="振幅衬度 质厚衬度 Z衬度 衍射衬度 amplitude contrast mass-thickness contrast z-contrast diffraction contrast">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">22</span>
+                            <div class="chapter-title-text">
+                                <span>振幅衬度</span>
+                                <span class="en-title">Amplitude Contrast</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">什么是衬度？<span class="en">What is contrast?</span></div>
+                            <div class="subsection">振幅衬度：图像和衍射图<span class="en">Amplitude contrast: Images and DPs</span></div>
+                            <div class="subsection">物镜光阑或STEM探测器的使用<span class="en">Objective aperture or STEM detector</span></div>
+                            <div class="subsection">质厚衬度：机制、TEM图像、STEM图像<span class="en">Mass-thickness contrast</span></div>
+                            <div class="subsection">定量质厚衬度<span class="en">Quantitative mass-thickness contrast</span></div>
+                            <div class="subsection">Z衬度<span class="en">Z-contrast</span></div>
+                            <div class="subsection">TEM衍射衬度：双束条件、设置偏差参数<span class="en">TEM diffraction contrast</span></div>
+                            <div class="subsection">STEM衍射衬度<span class="en">STEM diffraction contrast</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="相位衬度 晶格条纹 莫尔条纹 菲涅尔衬度 phase contrast lattice fringes moire patterns fresnel contrast">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">23</span>
+                            <div class="chapter-title-text">
+                                <span>相位衬度图像</span>
+                                <span class="en-title">Phase-Contrast Images</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">晶格条纹的起源<span class="en">Origin of lattice fringes</span></div>
+                            <div class="subsection">晶格条纹的实际方面<span class="en">Practical aspects of lattice fringes</span></div>
+                            <div class="subsection">轴上晶格条纹成像<span class="en">On-axis lattice fringe imaging</span></div>
+                            <div class="subsection">莫尔图样：平移、旋转和一般莫尔条纹<span class="en">Moiré patterns</span></div>
+                            <div class="subsection">莫尔条纹的实验观察<span class="en">Experimental observation of Moiré</span></div>
+                            <div class="subsection">位错和莫尔条纹<span class="en">Dislocations and Moiré patterns</span></div>
+                            <div class="subsection">菲涅尔衬度：菲涅尔双棱镜、磁畴壁<span class="en">Fresnel contrast</span></div>
+                            <div class="subsection">空洞或气泡的菲涅尔衬度<span class="en">Fresnel contrast from voids/bubbles</span></div>
+                            <div class="subsection">晶格缺陷的菲涅尔衬度<span class="en">Fresnel contrast from defects</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="厚度条纹 弯曲轮廓 吸收 thickness fringes bend contours absorption">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">24</span>
+                            <div class="chapter-title-text">
+                                <span>厚度和弯曲效应</span>
+                                <span class="en-title">Thickness and Bending Effects</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">基本思想<span class="en">Basic ideas</span></div>
+                            <div class="subsection">厚度条纹<span class="en">Thickness fringes</span></div>
+                            <div class="subsection">厚度条纹和衍射图<span class="en">Thickness fringes and DPs</span></div>
+                            <div class="subsection">弯曲轮廓<span class="en">Bend contours</span></div>
+                            <div class="subsection">ZAP和实空间晶体学<span class="en">ZAPs and real-space crystallography</span></div>
+                            <div class="subsection">山丘、凹陷或鞍形<span class="en">Hills, hollows, or saddles</span></div>
+                            <div class="subsection">吸收效应<span class="en">Absorption effects</span></div>
+                            <div class="subsection">厚度条纹的计算机模拟<span class="en">Computer simulation of thickness fringes</span></div>
+                            <div class="subsection">厚度条纹/弯曲轮廓相互作用<span class="en">Thickness/bend interaction</span></div>
+                            <div class="subsection">弯曲的其他效应<span class="en">Other effects of bending</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="平面缺陷 层错 相界 散射矩阵 planar defects stacking faults phase boundaries scattering matrix">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">25</span>
+                            <div class="chapter-title-text">
+                                <span>平面缺陷</span>
+                                <span class="en-title">Planar Defects</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">平移和旋转<span class="en">Translations and rotations</span></div>
+                            <div class="subsection">为什么平移产生衬度？<span class="en">Why do translations produce contrast?</span></div>
+                            <div class="subsection">散射矩阵<span class="en">The scattering matrix</span></div>
+                            <div class="subsection">使用散射矩阵<span class="en">Using the scattering matrix</span></div>
+                            <div class="subsection">fcc材料中的层错<span class="en">Stacking faults in fcc materials</span></div>
+                            <div class="subsection">其他平移：p和d条纹<span class="en">Other translations: p and d fringes</span></div>
+                            <div class="subsection">相界<span class="en">Phase boundaries</span></div>
+                            <div class="subsection">旋转界<span class="en">Rotation boundaries</span></div>
+                            <div class="subsection">衍射图和色散面<span class="en">Diffraction patterns and dispersion surfaces</span></div>
+                            <div class="subsection">布洛赫波和明/暗场图像对<span class="en">Bloch waves and BF/DF image pairs</span></div>
+                            <div class="subsection">计算机建模<span class="en">Computer modeling</span></div>
+                            <div class="subsection">广义横截面<span class="en">Generalized cross-sections</span></div>
+                            <div class="subsection">定量成像<span class="en">Quantitative imaging</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="应变场 位错 位移场 strain fields dislocations displacement fields">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">26</span>
+                            <div class="chapter-title-text">
+                                <span>应变场成像</span>
+                                <span class="en-title">Imaging Strain Fields</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么成像应变场？<span class="en">Why image strain fields?</span></div>
+                            <div class="subsection">Howie-Whelan方程<span class="en">The Howie-Whelan equations</span></div>
+                            <div class="subsection">单个位错的衬度<span class="en">Contrast from a single dislocation</span></div>
+                            <div class="subsection">位移场和埃瓦尔德球<span class="en">Displacement fields and the Ewald sphere</span></div>
+                            <div class="subsection">位错节点和网络<span class="en">Dislocation nodes and networks</span></div>
+                            <div class="subsection">位错环和偶极子<span class="en">Dislocation loops and dipoles</span></div>
+                            <div class="subsection">位错对、阵列和缠结<span class="en">Dislocation pairs, arrays, and tangles</span></div>
+                            <div class="subsection">表面效应<span class="en">Surface effects</span></div>
+                            <div class="subsection">位错和界面<span class="en">Dislocations and interfaces</span></div>
+                            <div class="subsection">体缺陷和颗粒<span class="en">Volume defects and particles</span></div>
+                            <div class="subsection">模拟图像<span class="en">Simulated images</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="弱束暗场 WBDF 位错分析 weak-beam dark-field wbdf dislocation analysis">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">27</span>
+                            <div class="chapter-title-text">
+                                <span>弱束暗场显微术</span>
+                                <span class="en-title">Weak-Beam Dark-Field Microscopy</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">WBDF图像中的强度<span class="en">Intensity in WBDF images</span></div>
+                            <div class="subsection">使用菊池图设置Sg<span class="en">Setting Sg using Kikuchi patterns</span></div>
+                            <div class="subsection">如何进行WBDF<span class="en">How to do WBDF</span></div>
+                            <div class="subsection">弱束图像中的厚度条纹<span class="en">Thickness fringes in weak-beam images</span></div>
+                            <div class="subsection">应变场成像<span class="en">Imaging strain fields</span></div>
+                            <div class="subsection">预测位错峰位置<span class="en">Predicting dislocation peak positions</span></div>
+                            <div class="subsection">相量图<span class="en">Phasor diagrams</span></div>
+                            <div class="subsection">解离位错的弱束图像<span class="en">Weak-beam images of dissociated dislocations</span></div>
+                            <div class="subsection">其他思考<span class="en">Other thoughts</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="高分辨TEM HRTEM 传递函数 Scherzer散焦 high-resolution tem hrtem transfer function scherzer defocus">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">28</span>
+                            <div class="chapter-title-text">
+                                <span>高分辨TEM</span>
+                                <span class="en-title">High-Resolution TEM</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">光学系统的作用<span class="en">The effect of the optical system</span></div>
+                            <div class="subsection">无线电类比<span class="en">The radio analogy</span></div>
+                            <div class="subsection">样品<span class="en">The specimen</span></div>
+                            <div class="subsection">将WPOA应用于TEM<span class="en">Applying WPOA to TEM</span></div>
+                            <div class="subsection">传递函数<span class="en">The transfer function</span></div>
+                            <div class="subsection">Scherzer散焦<span class="en">Scherzer defocus</span></div>
+                            <div class="subsection">包络阻尼函数<span class="en">Envelope damping functions</span></div>
+                            <div class="subsection">使用通带成像<span class="en">Imaging with the passband</span></div>
+                            <div class="subsection">实验考虑<span class="en">Experimental considerations</span></div>
+                            <div class="subsection">HRTEM的未来<span class="en">The future of HRTEM</span></div>
+                            <div class="subsection">TEM作为线性系统<span class="en">The TEM as a linear system</span></div>
+                            <div class="subsection">场发射TEM和信息极限<span class="en">FEG-TEM and information limit</span></div>
+                            <div class="subsection">使用FEG的一些困难<span class="en">Difficulties with using a FEG</span></div>
+                            <div class="subsection">选择性地成像亚晶格<span class="en">Selectively imaging sublattices</span></div>
+                            <div class="subsection">界面和表面<span class="en">Interfaces and surfaces</span></div>
+                            <div class="subsection">不相称结构<span class="en">Incommensurate structures</span></div>
+                            <div class="subsection">准晶体<span class="en">Quasicrystals</span></div>
+                            <div class="subsection">单原子<span class="en">Single atoms</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="立体显微术 洛伦兹显微术 电子全息 原位 stereo microscopy lorentz microscopy electron holography in-situ">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">29</span>
+                            <div class="chapter-title-text">
+                                <span>其他成像技术</span>
+                                <span class="en-title">Other Imaging Techniques</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">立体显微术和层析成像<span class="en">Stereo microscopy and tomography</span></div>
+                            <div class="subsection">2.5D显微术<span class="en">2.5D microscopy</span></div>
+                            <div class="subsection">磁性样品：磁校正和洛伦兹显微术<span class="en">Magnetic specimens: Lorentz microscopy</span></div>
+                            <div class="subsection">化学敏感图像<span class="en">Chemically sensitive images</span></div>
+                            <div class="subsection">用漫散射电子成像<span class="en">Imaging with diffuse scattered electrons</span></div>
+                            <div class="subsection">表面成像：反射电子显微术和形貌衬度<span class="en">Surface imaging: REM and topographic contrast</span></div>
+                            <div class="subsection">高阶明场成像<span class="en">High-order bright-field imaging</span></div>
+                            <div class="subsection">二次电子成像<span class="en">Secondary electron imaging</span></div>
+                            <div class="subsection">背散射电子成像<span class="en">Backscattered electron imaging</span></div>
+                            <div class="subsection">电荷收集显微术和阴极荧光<span class="en">Charge-collection and Cathodoluminescence</span></div>
+                            <div class="subsection">电子全息术<span class="en">Electron holography</span></div>
+                            <div class="subsection">原位TEM：动态实验<span class="en">In-situ TEM</span></div>
+                            <div class="subsection">涨落显微术<span class="en">Fluctuation microscopy</span></div>
+                            <div class="subsection">STEM中的其他变化<span class="en">Other variations in STEM</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="图像模拟 多层切片 FFT image simulation multislice fft">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">30</span>
+                            <div class="chapter-title-text">
+                                <span>图像模拟</span>
+                                <span class="en-title">Image Simulation</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">模拟图像<span class="en">Simulating images</span></div>
+                            <div class="subsection">多层切片方法<span class="en">The multislice method</span></div>
+                            <div class="subsection">倒空间方法<span class="en">Reciprocal-space methods</span></div>
+                            <div class="subsection">FFT方法<span class="en">FFT methods</span></div>
+                            <div class="subsection">实空间方法<span class="en">Real-space methods</span></div>
+                            <div class="subsection">布洛赫波和HRTEM模拟<span class="en">Bloch waves and HRTEM simulation</span></div>
+                            <div class="subsection">埃瓦尔德球是弯曲的<span class="en">The Ewald sphere is curved</span></div>
+                            <div class="subsection">选择切片厚度<span class="en">Choosing slice thickness</span></div>
+                            <div class="subsection">束流会聚<span class="en">Beam convergence</span></div>
+                            <div class="subsection">建模结构<span class="en">Modeling the structure</span></div>
+                            <div class="subsection">表面沟槽和模拟菲涅尔衬度<span class="en">Surface grooves and Fresnel contrast</span></div>
+                            <div class="subsection">计算缺陷图像<span class="en">Calculating defect images</span></div>
+                            <div class="subsection">模拟准晶体<span class="en">Simulating quasicrystals</span></div>
+                            <div class="subsection">晶体中的键合<span class="en">Bonding in crystals</span></div>
+                            <div class="subsection">模拟Z衬度<span class="en">Simulating Z-contrast</span></div>
+                            <div class="subsection">相位衬度HRTEM软件<span class="en">Phase-contrast HRTEM software</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="图像处理 傅里叶滤波 定量分析 image processing fourier filtering quantification">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">31</span>
+                            <div class="chapter-title-text">
+                                <span>图像处理和定量</span>
+                                <span class="en-title">Image Processing and Quantification</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">什么是图像处理？<span class="en">What is image processing?</span></div>
+                            <div class="subsection">图像处理和定量<span class="en">Processing and quantification</span></div>
+                            <div class="subsection">警示说明<span class="en">A warning</span></div>
+                            <div class="subsection">图像输入<span class="en">Image input</span></div>
+                            <div class="subsection">处理技术：傅里叶滤波和重建<span class="en">Processing: Fourier filtering and reconstruction</span></div>
+                            <div class="subsection">分析衍射图<span class="en">Analyzing diffraction patterns</span></div>
+                            <div class="subsection">平均图像和其他技术<span class="en">Averaging images and other techniques</span></div>
+                            <div class="subsection">核<span class="en">Kernels</span></div>
+                            <div class="subsection">应用：束流敏感材料、周期性图像<span class="en">Applications</span></div>
+                            <div class="subsection">校正漂移<span class="en">Correcting drift</span></div>
+                            <div class="subsection">重建相位<span class="en">Reconstructing the phase</span></div>
+                            <div class="subsection">衍射图<span class="en">Diffraction patterns</span></div>
+                            <div class="subsection">倾斜束系列<span class="en">Tilt-beam series</span></div>
+                            <div class="subsection">自动对准<span class="en">Auto-alignment</span></div>
+                            <div class="subsection">定量图像分析方法<span class="en">Methods of quantitative image analysis</span></div>
+                            <div class="subsection">HRTEM中的模式识别<span class="en">Pattern recognition in HRTEM</span></div>
+                            <div class="subsection">使用QUANTITEM参数化图像<span class="en">Parameterizing images (QUANTITEM)</span></div>
+                            <div class="subsection">定量化学晶格成像<span class="en">Quantitative chemical lattice imaging</span></div>
+                            <div class="subsection">拟合度测量方法<span class="en">Goodness of fit</span></div>
+                            <div class="subsection">傅里叶技术用于定量分析<span class="en">Fourier techniques for quantification</span></div>
+                            <div class="subsection">实空间还是倒空间？<span class="en">Real or reciprocal space?</span></div>
+                            <div class="subsection">软件<span class="en">Software</span></div>
+                            <div class="subsection">光学台的历史<span class="en">The history of the optical bench</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part 4: Spectrometry -->
+                <div id="part4" class="part-section">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">9</div>
+                            <div class="stat-label">章节 / Chapters</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">65+</div>
+                            <div class="stat-label">概念 / Concepts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">分析</div>
+                            <div class="stat-label">Analysis</div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="X射线能谱 EDS WDS 探测器 x-ray spectrometry eds wds detectors">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">32</span>
+                            <div class="chapter-title-text">
+                                <span>X射线能谱法</span>
+                                <span class="en-title">X-Ray Spectrometry</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">X射线分析：为什么要费心？<span class="en">Why bother with X-rays?</span></div>
+                            <div class="subsection">基本操作模式<span class="en">Basic operational modes</span></div>
+                            <div class="subsection">能量色散谱仪<span class="en">The Energy-Dispersive Spectrometer (EDS)</span></div>
+                            <div class="subsection">半导体探测器：XEDS如何工作<span class="en">Semiconductor detectors</span></div>
+                            <div class="subsection">冷却探测器<span class="en">Cooling the detector</span></div>
+                            <div class="subsection">不同类型的窗口<span class="en">Windows</span></div>
+                            <div class="subsection">本征锗探测器<span class="en">Intrinsic Germanium detectors</span></div>
+                            <div class="subsection">硅漂移探测器<span class="en">Silicon Drift Detectors (SDD)</span></div>
+                            <div class="subsection">高能量分辨率探测器<span class="en">High energy-resolution detectors</span></div>
+                            <div class="subsection">波长色散谱仪：晶体WDS、基于CCD的WDS<span class="en">Wavelength-Dispersive Spectrometers (WDS)</span></div>
+                            <div class="subsection">测辐射热计/微量热计<span class="en">Bolometers / Microcalorimeters</span></div>
+                            <div class="subsection">将X射线转化为谱<span class="en">Converting X-rays into a spectrum</span></div>
+                            <div class="subsection">能量分辨率<span class="en">Energy resolution</span></div>
+                            <div class="subsection">你应该了解你的XEDS什么<span class="en">What you should know about your XEDS</span></div>
+                            <div class="subsection">XEDS-AEM界面<span class="en">The XEDS-AEM interface</span></div>
+                            <div class="subsection">保护探测器免受强辐射<span class="en">Protecting the detector</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="X射线谱 谱图像 伪影 x-ray spectra spectral images artifacts">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">33</span>
+                            <div class="chapter-title-text">
+                                <span>X射线谱和图像</span>
+                                <span class="en-title">X-Ray Spectra and Images</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">理想谱：特征峰和连续背景<span class="en">The ideal spectrum</span></div>
+                            <div class="subsection">Si(Li) XEDS系统常见的伪影<span class="en">Artifacts in Si(Li) XEDS systems</span></div>
+                            <div class="subsection">真实谱：样品前效应、样品后散射<span class="en">The real spectrum: Pre-specimen, Post-specimen</span></div>
+                            <div class="subsection">相干韧致辐射<span class="en">Coherent Bremsstrahlung</span></div>
+                            <div class="subsection">测量XEDS-AEM界面的质量<span class="en">Measuring interface quality</span></div>
+                            <div class="subsection">获取X射线谱：点模式、谱线轮廓<span class="en">Acquiring X-ray spectra</span></div>
+                            <div class="subsection">获取X射线图像：模拟点映射、数字映射<span class="en">Acquiring X-ray images</span></div>
+                            <div class="subsection">谱成像(SI)<span class="en">Spectral Imaging (SI)</span></div>
+                            <div class="subsection">位置标记谱法(PTS)<span class="en">Position-Tagged Spectrometry (PTS)</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="定性X射线分析 峰识别 峰解卷积 qualitative x-ray analysis peak identification deconvolution">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">34</span>
+                            <div class="chapter-title-text">
+                                <span>定性X射线分析和成像</span>
+                                <span class="en-title">Qualitative X-Ray Analysis and Imaging</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">显微镜和样品变量<span class="en">Microscope and specimen variables</span></div>
+                            <div class="subsection">基本采集要求<span class="en">Basic acquisition requirements</span></div>
+                            <div class="subsection">峰识别<span class="en">Peak identification</span></div>
+                            <div class="subsection">峰解卷积<span class="en">Peak deconvolution</span></div>
+                            <div class="subsection">峰可见性<span class="en">Peak visibility</span></div>
+                            <div class="subsection">常见错误<span class="en">Common errors</span></div>
+                            <div class="subsection">定性X射线成像：原理和实践<span class="en">Qualitative X-ray imaging</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="定量X射线分析 Cliff-Lorimer k因子 吸收校正 quantitative x-ray analysis cliff-lorimer k-factor absorption correction">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">35</span>
+                            <div class="chapter-title-text">
+                                <span>定量X射线分析</span>
+                                <span class="en-title">Quantitative X-Ray Analysis</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">历史视角<span class="en">Historical perspective</span></div>
+                            <div class="subsection">Cliff-Lorimer比率技术<span class="en">The Cliff-Lorimer Ratio Technique</span></div>
+                            <div class="subsection">定量的实际步骤<span class="en">Practical steps in quantification</span></div>
+                            <div class="subsection">背景扣除<span class="en">Background subtraction</span></div>
+                            <div class="subsection">峰积分<span class="en">Peak integration</span></div>
+                            <div class="subsection">确定k因子：实验确定和计算<span class="en">Determining k-factors</span></div>
+                            <div class="subsection">定量中的误差：统计<span class="en">Errors in quantification</span></div>
+                            <div class="subsection">Zeta因子方法<span class="en">The Zeta-factor method</span></div>
+                            <div class="subsection">吸收校正<span class="en">Absorption correction</span></div>
+                            <div class="subsection">Zeta因子吸收校正<span class="en">Zeta-factor absorption correction</span></div>
+                            <div class="subsection">荧光校正<span class="en">Fluorescence correction</span></div>
+                            <div class="subsection">ALCHEMI<span class="en">ALCHEMI</span></div>
+                            <div class="subsection">定量X射线映射<span class="en">Quantitative X-ray mapping</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="空间分辨率 厚度测量 最小检测 spatial resolution thickness measurement minimum detection">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">36</span>
+                            <div class="chapter-title-text">
+                                <span>空间分辨率和最小检测</span>
+                                <span class="en-title">Spatial Resolution and Minimum Detection</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么空间分辨率重要？<span class="en">Why is spatial resolution important?</span></div>
+                            <div class="subsection">空间分辨率的定义和测量<span class="en">Definitions and measurement</span></div>
+                            <div class="subsection">束流扩展<span class="en">Beam spreading</span></div>
+                            <div class="subsection">空间分辨率方程<span class="en">The spatial resolution equation</span></div>
+                            <div class="subsection">空间分辨率的测量<span class="en">Measuring spatial resolution</span></div>
+                            <div class="subsection">厚度测量：TEM方法、污染点分离<span class="en">Thickness measurement</span></div>
+                            <div class="subsection">会聚束衍射方法<span class="en">CBED methods</span></div>
+                            <div class="subsection">电子能量损失谱法<span class="en">EELS methods</span></div>
+                            <div class="subsection">X射线能谱法<span class="en">XEDS methods</span></div>
+                            <div class="subsection">最小检测<span class="en">Minimum detection</span></div>
+                            <div class="subsection">影响MMF的实验因素<span class="en">Experimental factors affecting MMF</span></div>
+                            <div class="subsection">MMF的统计标准<span class="en">Statistical criteria for MMF</span></div>
+                            <div class="subsection">与其他定义的比较<span class="en">Comparison with other definitions</span></div>
+                            <div class="subsection">最小可检测质量<span class="en">Minimum detectable mass</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="EELS 电子能量损失谱 磁棱镜 滤波器 eels electron energy-loss spectrometry magnetic prism filters">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">37</span>
+                            <div class="chapter-title-text">
+                                <span>电子能量损失谱仪和滤波器</span>
+                                <span class="en-title">EELS and Energy Filters</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">为什么要做EELS？<span class="en">Why do EELS?</span></div>
+                            <div class="subsection">非弹性散射的利弊<span class="en">Pros and cons of inelastic scattering</span></div>
+                            <div class="subsection">能量损失谱<span class="en">The energy-loss spectrum</span></div>
+                            <div class="subsection">EELS仪器<span class="en">EELS instrumentation</span></div>
+                            <div class="subsection">磁棱镜：谱仪和透镜<span class="en">The magnetic prism</span></div>
+                            <div class="subsection">聚焦谱仪<span class="en">Focusing the spectrometer</span></div>
+                            <div class="subsection">谱仪色散<span class="en">Spectrometer dispersion</span></div>
+                            <div class="subsection">谱仪分辨率<span class="en">Spectrometer resolution</span></div>
+                            <div class="subsection">校准谱仪<span class="en">Calibrating the spectrometer</span></div>
+                            <div class="subsection">获取谱：图像和衍射模式<span class="en">Acquiring spectra</span></div>
+                            <div class="subsection">谱仪-收集角<span class="en">The collection angle</span></div>
+                            <div class="subsection">空间选择<span class="en">Spatial selection</span></div>
+                            <div class="subsection">PEELS的问题：点扩散函数和伪影<span class="en">Problems with PEELS</span></div>
+                            <div class="subsection">成像滤波器：Omega滤波器和GIF<span class="en">Imaging filters: Omega, GIF</span></div>
+                            <div class="subsection">单色器<span class="en">Monochromators</span></div>
+                            <div class="subsection">使用你的谱仪和滤波器<span class="en">Using your spectrometer and filter</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="低损失谱 零损失峰 等离激元 带隙 low-loss spectra zero-loss peak plasmons band gap">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">38</span>
+                            <div class="chapter-title-text">
+                                <span>低损失和零损失谱及图像</span>
+                                <span class="en-title">Low-Loss and Zero-Loss Spectra and Images</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">一些基本概念<span class="en">Some basic concepts</span></div>
+                            <div class="subsection">零损失峰(ZLP)<span class="en">The Zero-Loss Peak (ZLP)</span></div>
+                            <div class="subsection">为什么ZLP实际上不是<span class="en">Why the ZLP isn't actually zero loss</span></div>
+                            <div class="subsection">去除ZLP的尾巴<span class="en">Removing the tail of the ZLP</span></div>
+                            <div class="subsection">零损失图像和衍射图<span class="en">Zero-loss images and DPs</span></div>
+                            <div class="subsection">低损失谱<span class="en">The low-loss spectrum</span></div>
+                            <div class="subsection">化学指纹识别<span class="en">Chemical fingerprinting</span></div>
+                            <div class="subsection">介电常数确定<span class="en">Dielectric constant determination</span></div>
+                            <div class="subsection">等离激元<span class="en">Plasmons</span></div>
+                            <div class="subsection">等离激元损失分析<span class="en">Analysis of plasmon losses</span></div>
+                            <div class="subsection">单电子激发<span class="en">Single-electron excitations</span></div>
+                            <div class="subsection">带隙测量<span class="en">Band-gap measurement</span></div>
+                            <div class="subsection">非局域化效应<span class="en">Delocalization effects</span></div>
+                            <div class="subsection">厚度测量：对数比技术<span class="en">Thickness measurement: Log-ratio</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chapter" data-keywords="高损失谱 电离边 ELNES EXELFS 化学位移 high-loss spectra ionization edges elnes exelfs chemical shift">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">39</span>
+                            <div class="chapter-title-text">
+                                <span>高损失谱</span>
+                                <span class="en-title">High-Loss Spectra</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">高能量损失谱<span class="en">The high energy-loss spectrum</span></div>
+                            <div class="subsection">电离边：基本原理<span class="en">Ionization edges: Basic physics</span></div>
+                            <div class="subsection">电离截面<span class="en">Ionization cross sections</span></div>
+                            <div class="subsection">背景及其去除<span class="en">Background and its removal</span></div>
+                            <div class="subsection">能量损失近边结构 (ELNES)<span class="en">Energy-Loss Near-Edge Structure (ELNES)</span></div>
+                            <div class="subsection">ELNES 与态密度 (DOS)<span class="en">ELNES and Density of States (DOS)</span></div>
+                            <div class="subsection">扩展能量损失精细结构 (EXELFS)<span class="en">Extended Energy-Loss Fine Structure (EXELFS)</span></div>
+                            <div class="subsection">EXELFS 与径向分布函数 (RDF)<span class="en">EXELFS and Radial Distribution Functions</span></div>
+                            <div class="subsection">化学位移与价态测定<span class="en">Chemical shifts and valence state</span></div>
+                            <div class="subsection">原子分辨 EELS<span class="en">Atomic-resolution EELS</span></div>
+                        </div>
+                    </div>
+    
+                    <div class="chapter" data-keywords="EELS定量 背景拟合 积分截面 探测极限 eels quantification background fitting integral cross sections detection limit">
+                        <div class="chapter-title" onclick="toggleSubsections(this)">
+                            <span class="chapter-number">40</span>
+                            <div class="chapter-title-text">
+                                <span>EELS 定量分析</span>
+                                <span class="en-title">Quantification of EELS</span>
+                            </div>
+                        </div>
+                        <div class="subsections">
+                            <div class="subsection">定量分析的基本公式<span class="en">Basic formula for quantification</span></div>
+                            <div class="subsection">背景拟合：幂律模型<span class="en">Background fitting: Power laws</span></div>
+                            <div class="subsection">信号提取与积分窗口<span class="en">Signal extraction and integration windows</span></div>
+                            <div class="subsection">计算电离截面：Hartree-Slater 与 Hydrogenic 模型<span class="en">Calculating ionization cross sections</span></div>
+                            <div class="subsection">收敛角与收集角的校正<span class="en">Corrections for convergence and collection angles</span></div>
+                            <div class="subsection">复散射与去卷积<span class="en">Plural scattering and deconvolution</span></div>
+                            <div class="subsection">EELS 与 EDS 定量分析的比较<span class="en">Comparison of EELS and EDS quantification</span></div>
+                            <div class="subsection">探测极限与信噪比<span class="en">Detection limits and signal-to-noise</span></div>
+                            <div class="subsection">ALCHEMI 与 EELS<span class="en">ALCHEMI with EELS</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切换部分的显示
+        function showPart(partNumber) {
+            // 隐藏所有部分
+            document.querySelectorAll('.part-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            // 取消所有标签的激活状态
+            document.querySelectorAll('.nav-tab').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // 激活选定的部分和标签
+            const targetPart = document.getElementById('part' + partNumber);
+            if(targetPart) {
+                targetPart.classList.add('active');
+            }
+            
+            const tabs = document.querySelectorAll('.nav-tab');
+            if(tabs[partNumber-1]) {
+                tabs[partNumber-1].classList.add('active');
+            }
+        }
+
+        // 切换子章节的折叠/展开
+        function toggleSubsections(element) {
+            const subsections = element.nextElementSibling;
+            subsections.classList.toggle('show');
+        }
+
+        // 搜索功能
+        function searchContent() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const chapters = document.querySelectorAll('.chapter');
+            
+            chapters.forEach(chapter => {
+                const title = chapter.querySelector('.chapter-title').textContent.toLowerCase();
+                const keywords = chapter.getAttribute('data-keywords').toLowerCase();
+                const subsectionsText = chapter.querySelector('.subsections').textContent.toLowerCase();
+                
+                // 查找匹配 (现在也支持搜索英文)
+                const matches = title.includes(filter) || keywords.includes(filter) || subsectionsText.includes(filter);
+                
+                if (filter === "") {
+                    chapter.style.display = ""; 
+                    chapter.querySelector('.subsections').classList.remove('show');
+                } else if (matches) {
+                    chapter.style.display = "block";
+                    chapter.closest('.part-section').classList.add('active');
+                    
+                    if (subsectionsText.includes(filter)) {
+                        chapter.querySelector('.subsections').classList.add('show');
+                    }
+                } else {
+                    chapter.style.display = "none";
+                }
+            });
+
+            if (filter !== "") {
+                document.querySelectorAll('.part-section').forEach(el => el.classList.add('active'));
+            } else {
+                showPart(1);
+            }
+        }
+    </script>
+</body>
+</html>
